@@ -20,7 +20,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
     path: 'reviews',
     fields: 'review rating user',
   });
-  console.log(tour);
+
   if (!tour) {
     return next(new AppError('There is no tour with that name', 404));
   }
@@ -43,7 +43,7 @@ exports.getLoginForm = catchAsync(async (req, res) => {
 });
 
 exports.getSignupForm = catchAsync(async (req, res) => {
-  console.log("hello")
+
   res.status(200).render('signup', {
     title: 'Sign up your account',
   });
@@ -73,11 +73,11 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
 });
 
 exports.getMyTours = catchAsync(async (req, res, next) => {
-  console.log('req', req.user.id);
+
   const bookings = await Booking.find({ user: req.user.id });
-  console.log('bookings', bookings);
+
   const tourIds = bookings.map((el) => el.tour);
-  console.log(tourIds);
+
   const tours = await Tour.find({ _id: { $in: tourIds } });
 
   res.status(200).render('overview', {

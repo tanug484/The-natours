@@ -12,8 +12,9 @@ const UserRouter = require('./routes/userRoute');
 const reviewRouter = require('./routes/reviewRoute');
 const viewRouter = require('./routes/viewRoutes');
 const globalErrorHandler = require('./controller/errorController');
-console.log(process.env.NODE_ENV);
+
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 //Middleware
 const bookingRouter = require('./routes/bookingRoutes');
 
@@ -74,12 +75,13 @@ app.use(
   })
 );
 
+app.use(compression());
 // app.use(express.static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  // console.log(req.cookies);
-  // console.log(req.headers)
+
+
   next();
 });
 //My own middleware

@@ -38,7 +38,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   // const newUser = await User.create(req.body)
   const newUser = await User.create(req.body);
   const url = `${req.protocol}://${req.get('host')}/me`;
-  console.log(url);
+
   await new Email(newUser, url).sendWelcome();
   createSendToken(newUser, 201, req, res);
 });
@@ -255,7 +255,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 exports.updateMyPassword = catchAsync(async (req, res, next) => {
   ///1) get user from the collection
   const user = await User.findById(req.user.id).select('+password');
-  console.log('user in updated password', user);
+
   ///2)need to check if posted password is correct
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppError('Your current password is wrong', 401));
@@ -266,6 +266,6 @@ exports.updateMyPassword = catchAsync(async (req, res, next) => {
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
   //4)log user in,send JWT
-  console.log(user);
+
   createSendToken(user, 200, req, res);
 });
