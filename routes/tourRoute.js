@@ -11,7 +11,7 @@ const router = express.Router();
 //     authController.restrictTo('user'),
 //     reviewController.createReview
 //   );
-
+//Tour have been done
 router.use('/:tourId/reviews', reviewRouter);
 
 router
